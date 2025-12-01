@@ -1,0 +1,49 @@
+name: Image Prediction
+
+on:
+  workflow_dispatch:  # Manuel trigger
+  push:
+    branches:
+      - main
+
+jobs:
+  predict:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout Repo
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.10
+
+    - name: Install Python dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Pull ML Docker Image
+      run: |
+        docker pull guardvision/ml_project:v1.0
+
+    - name: Run ML API Container
+      run: |
+        docker run -d -p 8000:8000 --name ml_api guardvision/ml_project:v1.0
+        sleep 5  # API açılana kadar bekle
+
+    - name: Run Predictor Script
+      run: |
+        python predictor.py
+
+    - name: Upload result.json as artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: prediction-result
+        path: result.json
+
+    - name: Stop container
+      run: |
+        docker stop ml_api
+        docker rm ml_api
