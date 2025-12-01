@@ -3,7 +3,7 @@ import json
 import os
 
 API_URL = "http://localhost:8000/predict"
-IMAGE_PATH = "C:\\Users\\Admin\\Documents\\guard_vision\\test\\images\\test_image.jpg"
+IMAGE_PATH = "images/test_image.jpg"
 
 def main():
     if not os.path.exists(IMAGE_PATH):
