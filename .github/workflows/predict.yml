@@ -38,10 +38,11 @@ jobs:
         python predictor.py
 
     - name: Upload result.json as artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
-        name: prediction-result
+        name: prediction-output
         path: result.json
+
 
     - name: Stop container
       run: |
