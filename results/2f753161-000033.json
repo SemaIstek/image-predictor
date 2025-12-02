@@ -1,0 +1,19 @@
+{
+  "image": "images/2f753161-000033.jpg",
+  "response": {
+    "detections": [
+      {
+        "class_id": 16,
+        "label": "rocking_chair",
+        "confidence": 0.8885666131973267,
+        "bbox": {
+          "x1": 0.341033935546875,
+          "y1": 41.93836212158203,
+          "x2": 392.0306396484375,
+          "y2": 375.3770446777344
+        }
+      }
+    ],
+    "num_detections": 1
+  }
+}

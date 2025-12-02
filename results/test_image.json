@@ -1,0 +1,19 @@
+{
+  "image": "images/test_image.jpg",
+  "response": {
+    "detections": [
+      {
+        "class_id": 11,
+        "label": "leaf_blower",
+        "confidence": 0.8765425682067871,
+        "bbox": {
+          "x1": 22.790908813476562,
+          "y1": 192.987548828125,
+          "x2": 987.83740234375,
+          "y2": 1000.0
+        }
+      }
+    ],
+    "num_detections": 1
+  }
+}

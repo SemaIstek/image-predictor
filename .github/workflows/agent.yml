@@ -1,0 +1,48 @@
+name: Agent Manual Run
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-agent:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Pull ML Docker image
+      run: |
+        docker pull guardvision/ml_project:v1.0
+
+    - name: Run ML container
+      run: |
+        docker run -d -p 8000:8000 --name ml_api guardvision/ml_project:v1.0
+        sleep 10
+
+    - name: Run agent (one-shot)
+      run: |
+        python agent.py --no-watch
+
+    - name: Upload results and review artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: agent-results
+        path: |
+          results/**
+          for_review/**
+
+    - name: Stop and remove ML container
+      run: |
+        docker stop ml_api || true
+        docker rm ml_api || true

@@ -173,6 +173,46 @@ The output `result.json` will look like:
 
 ---
 
+## Agent (New)
+
+A simple image prediction agent is provided in `agent.py`. It watches a directory for new image files, sends them to the model API, stores full prediction outputs in `results/`, and saves low-confidence results in `for_review/` for human labeling.
+
+Usage examples:
+
+Run a one-shot pass over existing files:
+
+```bash
+pip install -r requirements.txt
+python agent.py --no-watch
+```
+
+Run in watch mode (process existing images then keep watching `images/`):
+
+```bash
+pip install -r requirements.txt
+python agent.py
+```
+
+Change the API endpoint or confidence threshold:
+
+```bash
+python agent.py --api-url http://localhost:8000/predict --threshold 0.75
+```
+
+Files produced:
+
+- `results/<image_name>.json`: full model response for each processed image
+- `for_review/<image_name>.json`: low-confidence entries that need human labeling
+
+This agent can be extended to:
+
+- Trigger a retraining workflow when enough labeled examples accumulate
+- Send notifications (Slack/email) for review items
+- Use an LLM-based agent (LangChain) to triage or synthesize labels
+
+
+---
+
 ## License
 
 MIT License
